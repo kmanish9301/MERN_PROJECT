@@ -39,3 +39,13 @@ This repository is a boilerplate for the backend of the user management system p
 3. Go into repository dir `cd Node-UserManagement-Server`
 4. Install root level dependencies `npm install`
 5. Run the project `npm start`
+
+## Sample Default Logins
+
+### Local User
+#### Email : lastsamurai@gmail.com
+#### Password : lastsamurai
+
+### Admin User
+#### Email : manish@gmail.com
+#### Password : manish
