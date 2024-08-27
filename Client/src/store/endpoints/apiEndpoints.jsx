@@ -1,4 +1,5 @@
-export const registerApiUrl = "/register";
-export const loginApiUrl = "/login";
-export const refreshTokenApiUrl = "/refresh_token";
-export const getAllUsersApiUrl = "/get_users";
+export const registerApiUrl = "/api/register";
+export const loginApiUrl = "/api/login";
+export const refreshTokenApiUrl = "/api/refresh_token";
+export const getAllUsersApiUrl = "/api/get_users";
+export const getAllProducts = "/v1/get_products";

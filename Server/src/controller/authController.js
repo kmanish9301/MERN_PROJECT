@@ -1,7 +1,6 @@
-import User from "../model/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+import User from "../model/userModel.js";
 
 const generateToken = (user, secret, expiresIn) => {
   return jwt.sign({ id: user._id, email: user.email }, secret, { expiresIn });
@@ -76,7 +75,7 @@ export const login = async (req, res) => {
     const token = generateToken(
       user,
       process.env.JWT_ACCESS_TOKEN_SECRET,
-      "15m"
+      "1h"
     );
     const refreshToken = generateToken(
       user,
