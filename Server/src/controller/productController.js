@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import Product from "../model/products.js";
+import Product from "../model/productModel.js";
 
 // Get the directory name of the current module
 const __filename = fileURLToPath(import.meta.url);
@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 
 export const createProduct = async (req, res) => {
   try {
-    const { type, name, brand, price } = req.body;
+    const { type, name, brand, price, speed, fuelType } = req.body;
 
     // Validate required fields
     if (!type || !name || !price) {
@@ -42,6 +42,8 @@ export const createProduct = async (req, res) => {
       name,
       brand,
       price,
+      speed,
+      fuelType,
       image: relativeImagePath,
     });
     await newProduct.save();
@@ -89,11 +91,15 @@ export const getAllProducts = async (req, res) => {
     //format in which you want to send the data
     const productDetails = productData.map((product) => ({
       id: product._id,
-      type: product.email,
+      type: product.type,
       name: product.name,
       brand: product.brand,
       price: product.price,
       image: product.image,
+      speed: product.speed,
+      fuelType: product.fuelType,
+      createdAt: product.createdAt,
+      updatedAt: product.updatedAt,
     }));
 
     res

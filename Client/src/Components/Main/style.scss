@@ -1,0 +1,49 @@
+.cardMain {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  .cardContainer {
+    width: 16rem;
+    box-shadow: none !important;
+    padding-bottom: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    .CardImage {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background-position: center;
+      object-fit: cover;
+      background-repeat: no-repeat;
+      border-bottom-left-radius: 0.7rem;
+      border-bottom-right-radius: 0.7rem;
+    }
+
+    .cardTitle {
+      font-family: "Times New Roman", Times, serif;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 0 0.6rem 0.5rem 0.6rem;
+    }
+
+    .cardDetails {
+      font-family: "Times New Roman", Times, serif;
+      padding: 0 0.6rem 0.6rem 0.6rem;
+      font-size: 1rem;
+    }
+
+    .detailsContainer {
+      padding: 0 0.6rem 0.5rem 0.6rem;
+      display: flex;
+      gap: 1rem;
+    }
+  }
+
+  .cardContainer:hover {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2), 0px 2px 4px rgba(0, 0, 0, 0.14),
+      0px 3px 6px rgba(0, 0, 0, 0.12);
+    transform: translateY(5px);
+  }
+}

@@ -27,7 +27,7 @@ const URL =
   process.env.MONGODB_URL || "mongodb://localhost:27017/usermanagement";
 
 mongoose
-  .connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(URL)
   .then(() => {
     console.log("DB connected successfully...!");
     app.listen(PORT, () => {
