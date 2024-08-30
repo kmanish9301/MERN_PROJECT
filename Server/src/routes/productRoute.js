@@ -6,6 +6,7 @@ import {
   createProduct,
   getAllProducts,
 } from "../controller/productController.js";
+import { Authenticate } from "../middleware/Authenticate.js";
 
 // Get the directory name of the current module
 const __filename = fileURLToPath(import.meta.url);
@@ -49,7 +50,12 @@ const upload = multer({
 const router = express.Router();
 
 // Route to create a product with image upload
-router.post("/create_product", upload.single("image"), createProduct);
-router.get("/get_products", getAllProducts);
+router.post(
+  "/create_product",
+  upload.single("image"),
+  Authenticate,
+  createProduct
+);
+router.get("/get_products", Authenticate, getAllProducts);
 
 export default router;

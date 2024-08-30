@@ -75,7 +75,7 @@ export const login = async (req, res) => {
     const token = generateToken(
       user,
       process.env.JWT_ACCESS_TOKEN_SECRET,
-      "1h"
+      "24h"
     );
     const refreshToken = generateToken(
       user,

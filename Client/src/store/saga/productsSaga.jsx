@@ -14,10 +14,10 @@ export function* getAllProductsSaga({ payload }) {
     const data = yield call(getAllProductsApi, payload);
     if (data?.status === 200) {
       yield put(getAllProductsSuccess(data?.data));
-      toast.success(data.data.message);
+      // toast.success(data.data.message);
     } else {
       yield put(getAllProductsError(data));
-      toast.error(data.message);
+      // toast.error(data.message);
     }
     yield put(getProductLoading(false));
   } catch (err) {

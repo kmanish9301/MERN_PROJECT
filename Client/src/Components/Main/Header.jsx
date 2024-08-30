@@ -45,7 +45,16 @@ const Header = () => {
     <>
       <AppBar
         position="static"
-        sx={{ background: "#fff", color: "#000", height: "100%", zIndex: "11" }}
+        sx={{
+          background: "#fff",
+          color: "#000",
+          height: "4rem !important",
+          zIndex: "11",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "none",
+        }}
       >
         <Container maxWidth="xl">
           <Toolbar
