@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import debounce from "lodash/debounce";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import defaultImage from "../../assets/bikepng.png";
 import SearchBar from "../../CommonComponents/SearchBar";
 import SelectComponent from "../../CommonComponents/SelectComponent";
 import { fuelTypeOptions, vehicleTypeOptions } from "../../Constants/constants";
@@ -84,7 +85,15 @@ const Products = () => {
         {data.length > 0 &&
           data.map((prod) => (
             <Card key={prod.id} className="cardContainer">
-              <img src={prod.image} alt={prod.name} className="CardImage" />
+              <img
+                src={prod.image || defaultImage}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = defaultImage;
+                }}
+                alt={prod.name}
+                className="CardImage"
+              />
               <Typography variant="body2" className="cardTitle">
                 {prod.name}
               </Typography>

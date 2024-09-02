@@ -15,6 +15,16 @@ export const register = async (req, res) => {
     if (role === "admin") {
       const adminExists = await User.findOne({ role: "admin" });
       if (adminExists) {
+        if (req.file) {
+          fs.unlink(
+            path.join(__dirname, "../../userImages", req.file.filename),
+            (err) => {
+              if (err) {
+                console.error("Error deleting the file:", err);
+              }
+            }
+          );
+        }
         return res.status(400).json({ message: "Admin already exists" });
       }
     }
@@ -27,11 +37,14 @@ export const register = async (req, res) => {
 
     const userRole = role === "admin" ? "admin" : "local-user";
 
+    const relativeImagePath = `${process.env.APP_BASE_URL}/userImages/${req.file.filename}`;
+
     user = new User({
       user_name,
       email,
       password: hashedPassword,
       role: userRole,
+      userImage: relativeImagePath,
     });
     await user.save();
 
@@ -92,6 +105,7 @@ export const login = async (req, res) => {
       userName: user.user_name,
       email: user.email,
       role: user.role,
+      userImage: user.userImage,
     };
     res
       .status(200)

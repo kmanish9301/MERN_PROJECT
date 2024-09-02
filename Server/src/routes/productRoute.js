@@ -17,7 +17,6 @@ const __dirname = path.dirname(__filename);
 // Configure multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    // Ensure the uploads directory exists
     cb(null, path.join(__dirname, "../../uploads"));
   },
   filename: function (req, file, cb) {
