@@ -4,7 +4,9 @@ import path from "path";
 import { fileURLToPath } from "url";
 import {
   createProduct,
+  deleteProduct,
   getAllProducts,
+  updateProduct,
 } from "../controller/productController.js";
 import { Authenticate } from "../middleware/Authenticate.js";
 
@@ -57,5 +59,13 @@ router.post(
   createProduct
 );
 router.get("/get_products", Authenticate, getAllProducts);
+
+router.put(
+  "/update_product/:id",
+  upload.single("image"),
+  Authenticate,
+  updateProduct
+);
+router.delete("/delete_product/:id", Authenticate, deleteProduct);
 
 export default router;

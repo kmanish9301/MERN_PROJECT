@@ -61,10 +61,8 @@ export const createProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
   try {
-    const { search_string, name, email } = req.query;
-    // Create a filter object
+    const { search_string, name, email, type, fuelType } = req.query;
     let filter = {};
-    // If search query parameter is provided, use it to filter by user_name or email
     if (search_string) {
       filter = {
         $or: [
@@ -73,14 +71,15 @@ export const getAllProducts = async (req, res) => {
         ],
       };
     }
-    // // Additional specific filters
-    // if (user_name) {
-    //     filter.user_name = { $regex: user_name, $options: 'i' };
-    // }
 
-    // if (email) {
-    //     filter.email = { $regex: email, $options: 'i' };
-    // }
+    if (type) {
+      filter.type = type;
+    }
+
+    if (fuelType) {
+      filter.fuelType = fuelType;
+    }
+
     const productData = await Product.find(filter);
     if (!productData.length) {
       return res
@@ -88,7 +87,6 @@ export const getAllProducts = async (req, res) => {
         .json({ error: true, message: "Product data not found" });
     }
 
-    //format in which you want to send the data
     const productDetails = productData.map((product) => ({
       id: product._id,
       type: product.type,
@@ -105,6 +103,85 @@ export const getAllProducts = async (req, res) => {
     res
       .status(200)
       .json({ count: productData.length, results: productDetails });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const updateProduct = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const { type, name, brand, price, speed, fuelType } = req.body;
+
+    // Check if the product exists
+    const existingProduct = await Product.findById(productId);
+    if (!existingProduct) {
+      if (req.file) {
+        fs.unlink(
+          path.join(__dirname, "../../uploads", req.file.filename),
+          (err) => {
+            if (err) {
+              console.error("Error deleting the file:", err);
+            }
+          }
+        );
+      }
+      return res.status(404).json({ message: "Product not found." });
+    }
+
+    // Update fields
+    existingProduct.type = type || existingProduct.type;
+    existingProduct.name = name || existingProduct.name;
+    existingProduct.brand = brand || existingProduct.brand;
+    existingProduct.price = price || existingProduct.price;
+    existingProduct.speed = speed || existingProduct.speed;
+    existingProduct.fuelType = fuelType || existingProduct.fuelType;
+
+    // Handle image update
+    if (req.file) {
+      // Delete the old image
+      if (existingProduct.image) {
+        const oldImagePath = path.join(
+          __dirname,
+          "../../uploads",
+          path.basename(existingProduct.image)
+        );
+        fs.unlink(oldImagePath, (err) => {
+          if (err) {
+            console.error("Error deleting the old file:", err);
+          }
+        });
+      }
+      const relativeImagePath = `${process.env.APP_BASE_URL}/uploads/${req.file.filename}`;
+      existingProduct.image = relativeImagePath;
+    }
+
+    // Save the updated product
+    await existingProduct.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Product updated successfully",
+      product: existingProduct,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: true, message: error.message });
+  }
+};
+
+export const deleteProduct = async (req, res) => {
+  try {
+    const id = await req.params.id;
+    const productExists = await Product.findByIdAndDelete(id);
+    if (!productExists) {
+      return res
+        .status(404)
+        .json({ error: true, message: "Product does not exists." });
+    }
+    res
+      .status(200)
+      .json({ success: true, message: "Product deleted successfully...!" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

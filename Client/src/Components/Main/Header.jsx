@@ -75,8 +75,12 @@ const Header = () => {
                 loading="eager|lazy"
                 style={{ height: "2rem", width: "2rem" }}
               />
-              <Typography variant="h5" mt={"10px"}>
-                User Port
+              <Typography
+                variant="h5"
+                mt={"10px"}
+                sx={{ fontFamily: "fantasy" }}
+              >
+                Velocity Sector
               </Typography>
             </Box>
             <Box

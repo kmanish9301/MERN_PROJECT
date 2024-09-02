@@ -1,6 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  margin-left: 5rem;
   .cardMain {
     display: flex;
     align-items: center;
@@ -49,5 +50,22 @@
         0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 6px rgba(0, 0, 0, 0.12);
       transform: translateY(5px);
     }
+  }
+}
+
+.filterContainer {
+  width: 100%;
+  margin-bottom: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .MuiFormControl-root {
+    width: 10rem;
+  }
+  .selectFilters {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
   }
 }
