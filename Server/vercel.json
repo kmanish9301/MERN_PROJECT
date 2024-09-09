@@ -17,11 +17,11 @@
     },
     {
       "src": "/uploads/(.*)",
-      "dest": "/public/uploads/$1"
+      "dest": "/uploads/$1"
     },
     {
       "src": "/userImages/(.*)",
-      "dest": "/public/userImages/$1"
+      "dest": "/userImages/$1"
     }
   ]
 }

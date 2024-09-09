@@ -21,12 +21,9 @@ const __dirname = path.dirname(__filename);
 app.use(bodyParser.json());
 app.use(cors());
 
-// Serve static files from the 'uploads' and 'userImages' directories
-app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
-app.use(
-  "/userImages",
-  express.static(path.join(__dirname, "public/userImages"))
-);
+// Serve static files directly from the root directory
+app.use(express.static(path.join(__dirname, "uploads")));
+app.use(express.static(path.join(__dirname, "userImages")));
 
 // Routes
 app.use("/api", userRoute);

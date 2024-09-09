@@ -23,7 +23,7 @@ export const createProduct = async (req, res) => {
     if (existingProduct) {
       if (req.file) {
         fs.unlink(
-          path.join(__dirname, "../../public/uploads", req.file.filename),
+          path.join(__dirname, "../../uploads", req.file.filename),
           (err) => {
             if (err) {
               console.error("Error deleting the file:", err);
@@ -118,7 +118,7 @@ export const updateProduct = async (req, res) => {
     if (!existingProduct) {
       if (req.file) {
         fs.unlink(
-          path.join(__dirname, "../../public/uploads", req.file.filename),
+          path.join(__dirname, "../../uploads", req.file.filename),
           (err) => {
             if (err) {
               console.error("Error deleting the file:", err);
@@ -143,7 +143,7 @@ export const updateProduct = async (req, res) => {
       if (existingProduct.image) {
         const oldImagePath = path.join(
           __dirname,
-          "../../public/uploads",
+          "../../uploads",
           path.basename(existingProduct.image)
         );
         fs.unlink(oldImagePath, (err) => {
