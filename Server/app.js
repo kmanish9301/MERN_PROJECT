@@ -22,8 +22,11 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Serve static files from the 'uploads' and 'userImages' directories
-app.use("/uploads", express.static("uploads"));
-app.use("/userImages", express.static("userImages"));
+app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
+app.use(
+  "/userImages",
+  express.static(path.join(__dirname, "public/userImages"))
+);
 
 // Routes
 app.use("/api", userRoute);

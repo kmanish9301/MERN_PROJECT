@@ -17,7 +17,7 @@ const __dirname = path.dirname(__filename);
 // Configure multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../../uploads"));
+    cb(null, path.join(__dirname, "../../public/uploads"));
   },
   filename: function (req, file, cb) {
     // Sanitize filename to avoid spaces and special characters
@@ -54,7 +54,7 @@ const router = express.Router();
 router.post(
   "/create_product",
   upload.single("image"),
-  Authenticate,
+  // Authenticate,
   createProduct
 );
 router.get("/get_products", Authenticate, getAllProducts);

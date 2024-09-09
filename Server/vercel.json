@@ -2,26 +2,26 @@
   "version": 2,
   "builds": [
     {
-      "src": "app.js",  
+      "src": "app.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/app.js" 
+      "dest": "/app.js"
     },
     {
       "src": "/v1/(.*)",
-      "dest": "/app.js"  
+      "dest": "/app.js"
     },
     {
-      "src": "/uploads/(.*)",  
-      "dest": "/uploads/$1"
+      "src": "/uploads/(.*)",
+      "dest": "/public/uploads/$1"
     },
     {
       "src": "/userImages/(.*)",
-      "dest": "/userImages/$1"
+      "dest": "/public/userImages/$1"
     }
   ]
 }

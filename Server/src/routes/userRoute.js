@@ -19,7 +19,7 @@ const __dirname = path.dirname(__filename);
 // Configure multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../../userImages"));
+    cb(null, path.join(__dirname, "../../public/userImages"));
   },
   filename: function (req, file, cb) {
     const sanitizedFilename = file.originalname.replace(/\s+/g, "_");
