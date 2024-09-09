@@ -3,10 +3,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import productRoute from "./src/routes/productRoute.js";
-import userRoute from "./src/routes/userRoute.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import contactUsRoute from "./src/routes/contactUsRoute.js";
+import productRoute from "./src/routes/productRoute.js";
+import userRoute from "./src/routes/userRoute.js";
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use("/userImages", express.static("userImages"));
 // Routes
 app.use("/api", userRoute);
 app.use("/v1", productRoute);
+app.use("/v1", contactUsRoute);
 
 // MongoDB connection
 const PORT = process.env.PORT || 8000;

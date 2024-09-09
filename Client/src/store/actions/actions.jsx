@@ -1,5 +1,6 @@
 import {
   authConstants,
+  contactUsConstants,
   productConstants,
   toggleTheme,
   userConstants,
@@ -111,4 +112,25 @@ export const getAllProductsError = (payload) => ({
 export const getAllProductsReset = (payload) => ({
   type: productConstants.PRODUCT_RESET,
   payload: payload,
+});
+
+// Contact-Us Actions
+export const contactUsLoading = (payload) => ({
+  type: contactUsConstants.CONTACT_LOADING,
+  payload: payload,
+});
+export const contactUsAction = (payload) => ({
+  type: contactUsConstants.CONTACT_ACTION,
+  payload: payload,
+});
+export const contactUsSuccess = (payload) => ({
+  type: contactUsConstants.CONTACT_SUCCESS,
+  payload: payload,
+});
+export const contactUsError = (payload) => ({
+  type: contactUsConstants.CONTACT_ERROR,
+  payload: payload,
+});
+export const contactUsReset = () => ({
+  type: contactUsConstants.CONTACT_RESET,
 });

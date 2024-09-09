@@ -47,42 +47,104 @@ export const register = async (req, res) => {
     // Define the path to the image
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
-    const imagePath = path.join(__dirname, "../assets/MailIcon.png");
+    const imagePath = path.join(__dirname, "../assets/Mail_Icon.jpg");
 
     const createEmailTemplate = (user_name) => {
       return `
  <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Onboard</title>
-  <!-- Import Google Font for consistency -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+
+    table {
+      border-spacing: 0;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+    }
+
+    img {
+      display: block;
+      margin: 0 auto;
+      border: 0;
+      background : transparent;
+    }
+
+    h4, p {
+      margin: 0;
+      padding: 0;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .email-header {
+      background-color: #93bef4;
+      color: #ffffff;
+      font-size: 24px;
+      padding: 20px;
+      text-align: center;
+      text-shadow: rgba(0, 0, 0, 0.24) 0px 5px 10px;
+    }
+
+    .email-body {
+      padding: 20px;
+    }
+
+    .email-footer {
+      padding: 20px;
+      font-size: 14px;
+      color: #333333;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #93bef4;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 
-<body style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; font-family: 'Roboto', sans-serif;">
-  <table role="presentation" style="width: 30rem; background-color: #fdfdfd; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border-collapse: collapse;">
+<body>
+  <table role="presentation">
     <tr>
-      <td style="text-align: center; background-color: #93bef4; height: 5rem; color: #ffffff; font-size: 1.5rem; text-shadow: rgba(0, 0, 0, 0.24) 0px 5px 10px; vertical-align: middle;">
-        Velocity Sector
+      <td>
+        <div class="email-header">
+          Velocity Sector
+        </div>
       </td>
     </tr>
     <tr>
-      <td style="text-align: center; padding: 0;">
-        <img src="cid:logo1" alt="Logo" style="height: 10rem; width: 10rem;" />
+      <td style="text-align: center;">
+        <img src="cid:logo1" alt="Logo" style="width: 100px; height: 100px; margin-top: 20px;" />
       </td>
     </tr>
     <tr>
-      <td style="padding: 1rem 2rem 1rem 2rem; vertical-align: top;">
-        <h4 style="margin: 0; padding: 0;">Dear ${user_name},</h4>
-        <p style="margin: 0; padding: 0; padding-top: 0.5rem;">Welcome aboard! Your registration has been successful.</p>
+      <td class="email-body">
+        <h4>Dear ${user_name},</h4>
+        <p>Welcome aboard! Your registration has been successful. We're excited to have you on board.</p>
       </td>
     </tr>
     <tr>
-      <td style="padding: 1rem 2rem 1rem 2rem; vertical-align: top;">
-        <p style="margin: 0; padding: 0;">Best regards,</p>
-        <p style="margin: 0; padding: 0; padding-top: 0.5rem; font-weight: 600;">Manish Kharbade</p>
+      <td class="email-footer">
+        <p>Best regards,</p>
+        <p><strong>Manish Kharbade</strong></p>
       </td>
     </tr>
   </table>

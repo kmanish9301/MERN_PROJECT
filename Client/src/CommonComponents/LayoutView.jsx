@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Footer, Header } from "../Components/Main";
-import Sider from "./Sider";
 import { isAuthenticated } from "./utils";
+import Sidebar from "./Sider";
 
 const LayoutView = ({ children }) => {
   const [showLayout, setShowLayout] = useState(false);
@@ -26,7 +26,7 @@ const LayoutView = ({ children }) => {
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
       <Box sx={{ display: "flex", flexGrow: 1 }}>
-        <Sider />
+        <Sidebar />
         <Box
           sx={{
             flexGrow: 1,

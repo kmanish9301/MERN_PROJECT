@@ -12,7 +12,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { navLinkData } from "../Constants/constants";
 
-const Sider = () => {
+const Sidebar = () => {
   const drawerWidth = 200;
   return (
     <>
@@ -53,4 +53,4 @@ const Sider = () => {
   );
 };
 
-export default Sider;
+export default Sidebar;
