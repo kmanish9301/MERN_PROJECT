@@ -1,4 +1,4 @@
-import { Box, Chip } from "@mui/material";
+import { Box, Chip, Grid } from "@mui/material";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import debounce from "lodash/debounce";
@@ -41,7 +41,7 @@ const Products = () => {
     debounce((term) => {
       loadData({ search_string: term });
     }, 500),
-    [selectOptions] // Dependencies
+    [selectOptions]
   );
 
   const handleChange = (e) => {
@@ -59,29 +59,52 @@ const Products = () => {
   };
 
   return (
-    <Box className="container">
-      <Box className="filterContainer">
-        <SearchBar value={searchTerm} onChange={handleChange} />
-        <Box className="selectFilters">
-          <SelectComponent
-            name="vehicleType"
-            options={vehicleTypeOptions}
-            value={selectOptions?.vehicleType}
-            onChange={handleChangeOptions}
-            label="Vehicle Type"
-            size="small"
-          />
-          <SelectComponent
-            name="fuelType"
-            options={fuelTypeOptions}
-            value={selectOptions?.fuelType}
-            onChange={handleChangeOptions}
-            label="Fuel Type"
-            size="small"
-          />
-        </Box>
-      </Box>
-      <Box className="cardMain">
+    <Box
+      sx={{
+        padding: { xs: 1, sm: 2, md: 3, lg: 4 },
+        width: "100%",
+      }}
+    >
+      <Grid container spacing={2} mb={2}>
+        <Grid item xs={12} sm={12} md={6} lg={4}>
+          <SearchBar value={searchTerm} onChange={handleChange} />
+        </Grid>
+        <Grid item xs={12} sm={12} md={6} lg={8}>
+          <Grid
+            container
+            spacing={2}
+            sx={{ display: "flex", justifyContent: "flex-end" }}
+          >
+            <Grid item xs={12} sm={6} md={4}>
+              <SelectComponent
+                name="vehicleType"
+                options={vehicleTypeOptions}
+                value={selectOptions.vehicleType}
+                onChange={handleChangeOptions}
+                label="Vehicle Type"
+                size="small"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <SelectComponent
+                name="fuelType"
+                options={fuelTypeOptions}
+                value={selectOptions.fuelType}
+                onChange={handleChangeOptions}
+                label="Fuel Type"
+                size="small"
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        spacing={2}
+        mb={2}
+        mt={5}
+        sx={{ display: "flex", gap: "3rem", marginLeft: "0.5rem" }}
+      >
         {data.length > 0 &&
           data.map((prod) => (
             <Card key={prod.id} className="cardContainer">
@@ -104,7 +127,7 @@ const Products = () => {
               </Box>
             </Card>
           ))}
-      </Box>
+      </Grid>
     </Box>
   );
 };

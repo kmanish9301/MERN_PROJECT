@@ -54,7 +54,7 @@ const router = express.Router();
 router.post(
   "/create_product",
   upload.single("image"),
-  // Authenticate,
+  Authenticate,
   createProduct
 );
 router.get("/get_products", Authenticate, getAllProducts);

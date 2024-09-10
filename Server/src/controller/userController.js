@@ -58,6 +58,7 @@ export const getAllUsers = async (req, res) => {
       user_name: user.user_name,
       email: user.email,
       role: user.role,
+      userImage: user.userImage,
     }));
 
     res.status(200).json({ count: usersData.length, results: userDetails });
