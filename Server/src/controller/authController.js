@@ -4,6 +4,13 @@ import User from "../model/userModel.js";
 import { sendEmail } from "../services/emailService.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import multer from "multer";
+import fs from "fs";
+
+// Get the directory name of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const uploadsDir = path.resolve(__dirname, "../../userImages");
 
 const generateToken = (user, secret, expiresIn) => {
   return jwt.sign({ id: user._id, email: user.email }, secret, { expiresIn });
@@ -17,7 +24,6 @@ export const register = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    // Check if the admin already exists
     if (role === "admin") {
       const adminExists = await User.findOne({ role: "admin" });
       if (adminExists) {
@@ -27,6 +33,14 @@ export const register = async (req, res) => {
 
     let user = await User.findOne({ email });
     if (user) {
+      // Delete the uploaded file if the user already exists
+      if (req.file) {
+        fs.unlink(path.join(uploadsDir, req.file.filename), (err) => {
+          if (err) {
+            console.error("Error deleting the file:", err);
+          }
+        });
+      }
       return res.status(400).json({ message: "User already exists" });
     }
 
@@ -34,17 +48,23 @@ export const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // Handle image upload if there's an image in the request
+    const relativeImagePath = req.file
+      ? `${process.env.APP_BASE_URL}/userImages/${req.file.filename}`
+      : null;
+
     // Create the new user
     user = new User({
       user_name,
       email,
       password: hashedPassword,
       role: role === "admin" ? "admin" : "local-user",
+      userImage: relativeImagePath,
     });
 
     await user.save();
 
-    // Define the path to the image
+    // Define the path to the image for email
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
     const imagePath = path.join(__dirname, "../assets/Mail_Icon.jpg");
@@ -53,7 +73,6 @@ export const register = async (req, res) => {
       return `
  <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -120,7 +139,6 @@ export const register = async (req, res) => {
     }
   </style>
 </head>
-
 <body>
   <table role="presentation">
     <tr>
@@ -149,9 +167,8 @@ export const register = async (req, res) => {
     </tr>
   </table>
 </body>
-
 </html>
-  `;
+      `;
     };
 
     // Prepare the email template and attachments

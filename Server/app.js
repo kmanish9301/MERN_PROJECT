@@ -24,13 +24,19 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
+// Ensure the userImages directory exists
+const userImagesDir = path.join(__dirname, "userImages");
+if (!fs.existsSync(userImagesDir)) {
+  fs.mkdirSync(userImagesDir, { recursive: true });
+}
+
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
 
-// Serve static files directly from the uploads directory
+// Serve static files directly from the uploads and userImages directories
 app.use("/uploads", express.static(uploadsDir));
-app.use("/userImages", express.static(path.join(__dirname, "userImages")));
+app.use("/userImages", express.static(userImagesDir));
 
 // Routes
 app.use("/api", userRoute);
