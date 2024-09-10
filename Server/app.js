@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Serve static files directly from the root directory
-app.use("/uploads", express.static(path.join(__dirname, "../../uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/userImages", express.static(path.join(__dirname, "userImages")));
 
 // Routes
