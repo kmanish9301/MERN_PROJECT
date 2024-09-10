@@ -7,6 +7,8 @@ import Product from "../model/productModel.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const uploadsDir = path.resolve(__dirname, "../../uploads");
+
 export const createProduct = async (req, res) => {
   try {
     const { type, name, brand, price, speed, fuelType } = req.body;
@@ -22,19 +24,18 @@ export const createProduct = async (req, res) => {
     const existingProduct = await Product.findOne({ name });
     if (existingProduct) {
       if (req.file) {
-        fs.unlink(
-          path.join(__dirname, "../../uploads", req.file.filename),
-          (err) => {
-            if (err) {
-              console.error("Error deleting the file:", err);
-            }
+        fs.unlink(path.join(uploadsDir, req.file.filename), (err) => {
+          if (err) {
+            console.error("Error deleting the file:", err);
           }
-        );
+        });
       }
       return res.status(400).json({ message: "Product already exists." });
     }
 
-    const relativeImagePath = `${process.env.APP_BASE_URL}/uploads/${req.file.filename}`;
+    const relativeImagePath = req.file
+      ? `${process.env.APP_BASE_URL}/uploads/${req.file.filename}`
+      : null;
 
     // Create new product
     const newProduct = new Product({
@@ -61,14 +62,11 @@ export const createProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
   try {
-    const { search_string, name, email, type, fuelType } = req.query;
+    const { search_string, type, fuelType } = req.query;
     let filter = {};
     if (search_string) {
       filter = {
-        $or: [
-          { name: { $regex: search_string, $options: "i" } },
-          // { email: { $regex: search_string, $options: "i" } },
-        ],
+        $or: [{ name: { $regex: search_string, $options: "i" } }],
       };
     }
 
@@ -104,7 +102,8 @@ export const getAllProducts = async (req, res) => {
       .status(200)
       .json({ count: productData.length, results: productDetails });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error("Error:", error);
+    res.status(500).json({ error: true, message: error.message });
   }
 };
 
@@ -117,14 +116,11 @@ export const updateProduct = async (req, res) => {
     const existingProduct = await Product.findById(productId);
     if (!existingProduct) {
       if (req.file) {
-        fs.unlink(
-          path.join(__dirname, "../../uploads", req.file.filename),
-          (err) => {
-            if (err) {
-              console.error("Error deleting the file:", err);
-            }
+        fs.unlink(path.join(uploadsDir, req.file.filename), (err) => {
+          if (err) {
+            console.error("Error deleting the file:", err);
           }
-        );
+        });
       }
       return res.status(404).json({ message: "Product not found." });
     }
@@ -142,8 +138,7 @@ export const updateProduct = async (req, res) => {
       // Delete the old image
       if (existingProduct.image) {
         const oldImagePath = path.join(
-          __dirname,
-          "../../uploads",
+          uploadsDir,
           path.basename(existingProduct.image)
         );
         fs.unlink(oldImagePath, (err) => {
@@ -172,17 +167,35 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
   try {
-    const id = await req.params.id;
-    const productExists = await Product.findByIdAndDelete(id);
+    const id = req.params.id;
+    const productExists = await Product.findById(id);
     if (!productExists) {
       return res
         .status(404)
-        .json({ error: true, message: "Product does not exists." });
+        .json({ error: true, message: "Product does not exist." });
     }
+
+    // Delete the product
+    await Product.findByIdAndDelete(id);
+
+    // Delete the associated image if it exists
+    if (productExists.image) {
+      const imagePath = path.join(
+        uploadsDir,
+        path.basename(productExists.image)
+      );
+      fs.unlink(imagePath, (err) => {
+        if (err) {
+          console.error("Error deleting the file:", err);
+        }
+      });
+    }
+
     res
       .status(200)
-      .json({ success: true, message: "Product deleted successfully...!" });
+      .json({ success: true, message: "Product deleted successfully!" });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error("Error:", error);
+    res.status(500).json({ error: true, message: error.message });
   }
 };
