@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { LoaderComponent } from "../../CommonComponents";
 import { registerAction } from "../../store/actions/actions";
+import { useEffect } from "react";
 
 const schema = yup
   .object({
@@ -57,11 +58,13 @@ const Register = () => {
       password: data?.password,
     };
     dispatch(registerAction(payload));
+  };
 
-    if (success === true) {
+  useEffect(() => {
+    if (success) {
       handleRedirectLogin();
     }
-  };
+  }, [success]);
 
   return (
     <>
