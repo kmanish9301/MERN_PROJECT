@@ -1,14 +1,22 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React from "react";
 
-const SelectComponent = ({ name, options, value, onChange, label, size }) => {
+const SelectComponent = ({
+  name,
+  options,
+  value,
+  onChange,
+  label,
+  size,
+  variant,
+}) => {
   return (
-    <FormControl fullWidth variant="standard" size={size}>
+    <FormControl fullWidth variant={variant} size={size}>
       <InputLabel id={`${name}-select-label`}>{label}</InputLabel>
       <Select
         labelId={`${name}-select-label`}
         id={`${name}-select`}
-        name={name} // Make sure this is set
+        name={name}
         value={value}
         onChange={onChange}
         label={label}

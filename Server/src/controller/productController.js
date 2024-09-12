@@ -81,7 +81,7 @@ export const getAllProducts = async (req, res) => {
     const productData = await Product.find(filter);
     if (!productData.length) {
       return res
-        .status(404)
+        .status(200)
         .json({ error: true, message: "Product data not found" });
     }
 
