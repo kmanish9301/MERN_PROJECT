@@ -114,6 +114,24 @@ export const getAllProductsReset = (payload) => ({
   payload: payload,
 });
 
+// Create Product
+export const createProductAction = (payload) => ({
+  type: productConstants.CREATE_PRODUCT_ACTION,
+  payload: payload,
+});
+export const createProductSuccess = (payload) => ({
+  type: productConstants.CREATE_PRODUCT_SUCCESS,
+  payload: payload,
+});
+export const createProductError = (payload) => ({
+  type: productConstants.CREATE_PRODUCT_ERROR,
+  payload: payload,
+});
+export const createProductReset = (payload) => ({
+  type: productConstants.CREATE_PRODUCT_RESET,
+  payload: payload,
+});
+
 // Contact-Us Actions
 export const contactUsLoading = (payload) => ({
   type: contactUsConstants.CONTACT_LOADING,

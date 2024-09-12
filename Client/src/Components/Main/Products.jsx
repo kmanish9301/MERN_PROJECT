@@ -1,17 +1,14 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Box, Button, Grid, Modal, Typography } from "@mui/material";
-import { FormProvider, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { Box, Button, Card, Chip, Grid, Typography } from "@mui/material";
 import debounce from "lodash/debounce";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import defaultImage from "../../assets/bikepng.png";
-import SelectComponent from "../../CommonComponents/SelectComponent";
 import SearchBar from "../../CommonComponents/SearchBar";
+import SelectComponent from "../../CommonComponents/SelectComponent";
 import { fuelTypeOptions, vehicleTypeOptions } from "../../Constants/constants";
 import { getAllProductsAction } from "../../store/actions/actions";
-import "./style.scss";
 import CreateProduct from "./CreateProduct";
+import "./style.scss";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -157,7 +154,11 @@ const Products = () => {
         </Grid>
       </Box>
 
-      <CreateProduct open={openModal} onClose={handleCloseModal} />
+      <CreateProduct
+        open={openModal}
+        onClose={handleCloseModal}
+        onProductCreated={() => loadData()}
+      />
     </>
   );
 };
