@@ -1,8 +1,11 @@
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button, Card, Chip, Grid, Typography } from "@mui/material";
 import debounce from "lodash/debounce";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import defaultImage from "../../assets/bikepng.png";
+import EllipsisOption from "../../CommonComponents/EllipsisOption";
 import SearchBar from "../../CommonComponents/SearchBar";
 import SelectComponent from "../../CommonComponents/SelectComponent";
 import { fuelTypeOptions, vehicleTypeOptions } from "../../Constants/constants";
@@ -60,6 +63,27 @@ const Products = () => {
       [name]: value,
     }));
   };
+
+  const editRecordHandler = () => {
+    console.log("Edit");
+  };
+
+  const deleteRecordHandler = () => {
+    console.log("Delete");
+  };
+
+  const ellipsisOptions = [
+    {
+      icon: <EditIcon className="qa-edit-btn" />,
+      text: "Edit",
+      actionFunction: (record) => editRecordHandler(record),
+    },
+    {
+      icon: <DeleteForeverIcon className="qa-delete-btn" />,
+      text: "Delete",
+      actionFunction: (record) => deleteRecordHandler(record),
+    },
+  ];
 
   return (
     <>
@@ -132,22 +156,38 @@ const Products = () => {
           {data.length > 0 &&
             data.map((prod) => (
               <Card key={prod.id} className="cardContainer">
-                <img
-                  src={prod.image || defaultImage}
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = defaultImage;
-                  }}
-                  alt={prod.name}
-                  className="CardImage"
-                />
-                <Typography variant="body2" className="cardTitle">
-                  {prod.name}
-                </Typography>
-                <Box className="detailsContainer">
-                  <Chip label={prod.fuelType} />
-                  <Chip label={prod.speed} />
-                  <Chip label={prod.price} />
+                <Box sx={{ position: "relative" }}>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: "0.5rem",
+                      right: "0.5rem",
+                      zIndex: 1,
+                    }}
+                  >
+                    <EllipsisOption
+                      options={ellipsisOptions}
+                      record={prod}
+                      className="ellipsisMenu"
+                    />
+                  </Box>
+                  <img
+                    src={prod.image || defaultImage}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = defaultImage;
+                    }}
+                    alt={prod.name}
+                    className="CardImage"
+                  />
+                  <Typography variant="body2" className="cardTitle">
+                    {prod.name}
+                  </Typography>
+                  <Box className="detailsContainer">
+                    <Chip label={prod.fuelType} />
+                    <Chip label={prod.speed} />
+                    <Chip label={prod.price} />
+                  </Box>
                 </Box>
               </Card>
             ))}

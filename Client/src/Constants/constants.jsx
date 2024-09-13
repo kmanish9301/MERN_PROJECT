@@ -1,8 +1,8 @@
-import ContactEmergencyIcon from "@mui/icons-material/ContactEmergency";
-import GroupIcon from "@mui/icons-material/Group";
-import HomeIcon from "@mui/icons-material/Home";
-import InfoIcon from "@mui/icons-material/Info";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import AboutIcon from "../CommonComponents/Icons/AboutIcon";
+import ContactIcon from "../CommonComponents/Icons/ContactIcon";
+import GroupIcon from "../CommonComponents/Icons/GroupIcon";
+import HomeIcon from "../CommonComponents/Icons/HomeIcon";
+import VehicleIcon from "../CommonComponents/Icons/ShoppingCartIcon";
 import ROUTES from "../Routes/routes";
 
 export const navLinkData = [
@@ -16,7 +16,7 @@ export const navLinkData = [
     id: 1002,
     title: "About",
     link: ROUTES.ABOUT,
-    icon: <InfoIcon />,
+    icon: <AboutIcon />,
   },
   {
     id: 1003,
@@ -26,15 +26,15 @@ export const navLinkData = [
   },
   {
     id: 1004,
-    title: "Products",
+    title: "Vehicles",
     link: ROUTES.PRODUCTS,
-    icon: <ShoppingCartIcon />,
+    icon: <VehicleIcon />,
   },
   {
     id: 1005,
     title: "Contact",
     link: ROUTES.CONTACT,
-    icon: <ContactEmergencyIcon />,
+    icon: <ContactIcon />,
   },
 ];
 
