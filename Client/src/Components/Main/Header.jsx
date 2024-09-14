@@ -41,6 +41,8 @@ const Header = () => {
     .toLowerCase()
     .replace(/^\w/, (c) => c.toUpperCase());
 
+  const userImage = loginDetails?.data?.userData?.userImage;
+
   return (
     <>
       <AppBar
@@ -113,7 +115,9 @@ const Header = () => {
                 }}
               >
                 <Avatar
+                  alt="User"
                   sx={{ width: "2rem", height: "2rem", cursor: "pointer" }}
+                  src={userImage}
                 />
                 <Typography variant="body1" color="initial">
                   {userName}

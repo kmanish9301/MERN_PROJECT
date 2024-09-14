@@ -26,6 +26,7 @@ import {
 
 const CreateProduct = ({ open, onClose, onProductCreated }) => {
   const dispatch = useDispatch();
+
   const { productData, success, loading } = useSelector(
     (state) => state.product
   );

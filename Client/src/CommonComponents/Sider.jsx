@@ -37,7 +37,7 @@ const Sidebar = () => {
       anchor="left"
     >
       <Box sx={{ marginTop: "4rem" }}>
-        <List>
+        <List sx={{ padding: "0" }}>
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               onClick={handleDrawerToggle}

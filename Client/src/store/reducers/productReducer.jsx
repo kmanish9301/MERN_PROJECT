@@ -5,6 +5,8 @@ const initialState = {
   loading: false,
   success: false,
   productData: {},
+  deleteProductSuccess: false,
+  updateProductSuccess: false,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -28,6 +30,7 @@ const productReducer = (state = initialState, action) => {
         loading: false,
       };
 
+    // Create Product
     case productConstants.CREATE_PRODUCT_ACTION:
       return {
         ...state,
@@ -55,6 +58,56 @@ const productReducer = (state = initialState, action) => {
         productData: {},
         loading: false,
         success: false,
+      };
+
+    // Delete
+    case productConstants.DELETE_PRODUCT_ACTION:
+      return {
+        ...state,
+        loading: true,
+      };
+    case productConstants.DELETE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        deleteProductSuccess: true,
+        loading: false,
+      };
+    case productConstants.DELETE_PRODUCT_ERROR:
+      return {
+        ...state,
+        deleteProductSuccess: false,
+        loading: false,
+      };
+    case productConstants.DELETE_PRODUCT_RESET:
+      return {
+        ...state,
+        deleteProductSuccess: false,
+        loading: false,
+      };
+
+    // Update
+    case productConstants.DELETE_PRODUCT_ACTION:
+      return {
+        ...state,
+        loading: true,
+      };
+    case productConstants.DELETE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        deleteProductSuccess: true,
+        loading: false,
+      };
+    case productConstants.DELETE_PRODUCT_ERROR:
+      return {
+        ...state,
+        deleteProductSuccess: false,
+        loading: false,
+      };
+    case productConstants.DELETE_PRODUCT_RESET:
+      return {
+        ...state,
+        deleteProductSuccess: false,
+        loading: false,
       };
     default:
       return state;

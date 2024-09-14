@@ -58,12 +58,12 @@ const Login = () => {
     dispatch(loginAction(payload));
   };
 
-  useEffect(() => {
-    dispatch(loginReset());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(loginReset());
+  // }, []);
 
   useEffect(() => {
-    if (success === true) {
+    if (success) {
       navigate("/dashboard");
     }
   }, [success]);

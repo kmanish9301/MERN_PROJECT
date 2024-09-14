@@ -132,6 +132,42 @@ export const createProductReset = (payload) => ({
   payload: payload,
 });
 
+// Delete Product
+export const deleteProductAction = (payload) => ({
+  type: productConstants.DELETE_PRODUCT_ACTION,
+  payload: payload,
+});
+export const deleteProductSuccess = (payload) => ({
+  type: productConstants.DELETE_PRODUCT_SUCCESS,
+  payload: payload,
+});
+export const deleteProductError = (payload) => ({
+  type: productConstants.DELETE_PRODUCT_ERROR,
+  payload: payload,
+});
+export const deleteProductReset = (payload) => ({
+  type: productConstants.DELETE_PRODUCT_RESET,
+  payload: payload,
+});
+
+// Update Product
+export const updateProductAction = (payload) => ({
+  type: productConstants.UPDATE_PRODUCT_ACTION,
+  payload: payload,
+});
+export const updateProductSuccess = (payload) => ({
+  type: productConstants.UPDATE_PRODUCT_SUCCESS,
+  payload: payload,
+});
+export const updateProductError = (payload) => ({
+  type: productConstants.UPDATE_PRODUCT_ERROR,
+  payload: payload,
+});
+export const updateProductReset = (payload) => ({
+  type: productConstants.UPDATE_PRODUCT_RESET,
+  payload: payload,
+});
+
 // Contact-Us Actions
 export const contactUsLoading = (payload) => ({
   type: contactUsConstants.CONTACT_LOADING,

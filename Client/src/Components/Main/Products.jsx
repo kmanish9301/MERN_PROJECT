@@ -1,21 +1,31 @@
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button, Card, Chip, Grid, Typography } from "@mui/material";
 import debounce from "lodash/debounce";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import defaultImage from "../../assets/bikepng.png";
 import EllipsisOption from "../../CommonComponents/EllipsisOption";
+import DeleteIcon from "../../CommonComponents/Icons/DeleteIcon";
+import UpdateIcon from "../../CommonComponents/Icons/UpdateIcon";
 import SearchBar from "../../CommonComponents/SearchBar";
 import SelectComponent from "../../CommonComponents/SelectComponent";
 import { fuelTypeOptions, vehicleTypeOptions } from "../../Constants/constants";
-import { getAllProductsAction } from "../../store/actions/actions";
+import {
+  deleteProductAction,
+  deleteProductReset,
+  getAllProductsAction,
+  updateProductAction,
+} from "../../store/actions/actions";
 import CreateProduct from "./CreateProduct";
 import "./style.scss";
+import { LoaderComponent } from "../../CommonComponents";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.product);
+  const { data, deleteProductSuccess, loading } = useSelector(
+    (state) => state.product
+  );
+  console.log("deleteProductSuccess:", deleteProductSuccess);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectOptions, setSelectOptions] = useState({
     vehicleType: "",
@@ -64,22 +74,31 @@ const Products = () => {
     }));
   };
 
-  const editRecordHandler = () => {
-    console.log("Edit");
+  const editRecordHandler = (data) => {
+    const id = data?.id;
+    dispatch(updateProductAction(id));
   };
 
-  const deleteRecordHandler = () => {
-    console.log("Delete");
+  const deleteRecordHandler = (data) => {
+    const id = data?.id;
+    dispatch(deleteProductAction(id));
   };
+
+  useEffect(() => {
+    if (deleteProductSuccess) {
+      loadData();
+      dispatch(deleteProductReset());
+    }
+  }, [deleteProductSuccess, dispatch]);
 
   const ellipsisOptions = [
     {
-      icon: <EditIcon className="qa-edit-btn" />,
+      icon: <UpdateIcon className="qa-edit-btn" />,
       text: "Edit",
       actionFunction: (record) => editRecordHandler(record),
     },
     {
-      icon: <DeleteForeverIcon className="qa-delete-btn" />,
+      icon: <DeleteIcon className="qa-delete-btn" />,
       text: "Delete",
       actionFunction: (record) => deleteRecordHandler(record),
     },
@@ -160,8 +179,8 @@ const Products = () => {
                   <Box
                     sx={{
                       position: "absolute",
-                      top: "0.5rem",
-                      right: "0.5rem",
+                      top: "0rem",
+                      right: "0rem",
                       zIndex: 1,
                     }}
                   >
@@ -199,6 +218,8 @@ const Products = () => {
         onClose={handleCloseModal}
         onProductCreated={() => loadData()}
       />
+
+      {loading && <LoaderComponent />}
     </>
   );
 };
