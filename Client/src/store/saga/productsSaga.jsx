@@ -9,11 +9,14 @@ import {
   getAllProductsError,
   getAllProductsSuccess,
   getProductLoading,
+  updateProductError,
+  updateProductSuccess,
 } from "../actions/actions";
 import {
   createProductApi,
   deleteProductApi,
   getAllProductsApi,
+  updateProductApi,
 } from "../apis/productApi";
 
 export function* getAllProductsSaga({ payload }) {
@@ -67,8 +70,27 @@ export function* deleteProductSaga({ payload }) {
   }
 }
 
+export function* updateProductSaga({ payload }) {
+  const { id, formData } = payload;
+  try {
+    yield put(getProductLoading(true));
+    const data = yield call(updateProductApi, id, formData);
+    if (data?.status === 200) {
+      yield put(updateProductSuccess(data?.data));
+      toast.success(data.data.message);
+    } else {
+      yield put(updateProductError(data));
+      toast.error(data.message);
+    }
+    yield put(getProductLoading(false));
+  } catch (err) {
+    yield put(updateProductError(err));
+  }
+}
+
 export function* productRootSaga() {
   yield takeLatest(productConstants.PRODUCT_ACTION, getAllProductsSaga);
   yield takeLatest(productConstants.CREATE_PRODUCT_ACTION, createProductSaga);
   yield takeLatest(productConstants.DELETE_PRODUCT_ACTION, deleteProductSaga);
+  yield takeLatest(productConstants.UPDATE_PRODUCT_ACTION, updateProductSaga);
 }

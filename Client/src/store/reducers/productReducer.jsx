@@ -86,27 +86,27 @@ const productReducer = (state = initialState, action) => {
       };
 
     // Update
-    case productConstants.DELETE_PRODUCT_ACTION:
+    case productConstants.UPDATE_PRODUCT_ACTION:
       return {
         ...state,
         loading: true,
       };
-    case productConstants.DELETE_PRODUCT_SUCCESS:
+    case productConstants.UPDATE_PRODUCT_SUCCESS:
       return {
         ...state,
-        deleteProductSuccess: true,
+        updateProductSuccess: true,
         loading: false,
       };
-    case productConstants.DELETE_PRODUCT_ERROR:
+    case productConstants.UPDATE_PRODUCT_ERROR:
       return {
         ...state,
-        deleteProductSuccess: false,
+        updateProductSuccess: false,
         loading: false,
       };
-    case productConstants.DELETE_PRODUCT_RESET:
+    case productConstants.UPDATE_PRODUCT_RESET:
       return {
         ...state,
-        deleteProductSuccess: false,
+        updateProductSuccess: false,
         loading: false,
       };
     default:

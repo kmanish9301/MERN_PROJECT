@@ -3,6 +3,7 @@ import debounce from "lodash/debounce";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import defaultImage from "../../assets/bikepng.png";
+import { LoaderComponent } from "../../CommonComponents";
 import EllipsisOption from "../../CommonComponents/EllipsisOption";
 import DeleteIcon from "../../CommonComponents/Icons/DeleteIcon";
 import UpdateIcon from "../../CommonComponents/Icons/UpdateIcon";
@@ -13,18 +14,15 @@ import {
   deleteProductAction,
   deleteProductReset,
   getAllProductsAction,
-  updateProductAction,
 } from "../../store/actions/actions";
 import CreateProduct from "./CreateProduct";
 import "./style.scss";
-import { LoaderComponent } from "../../CommonComponents";
 
 const Products = () => {
   const dispatch = useDispatch();
   const { data, deleteProductSuccess, loading } = useSelector(
     (state) => state.product
   );
-  console.log("deleteProductSuccess:", deleteProductSuccess);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectOptions, setSelectOptions] = useState({
@@ -32,6 +30,7 @@ const Products = () => {
     fuelType: "",
   });
   const [openModal, setOpenModal] = useState(false);
+  const [productUpdate, setProductUpdate] = useState({});
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -75,8 +74,10 @@ const Products = () => {
   };
 
   const editRecordHandler = (data) => {
-    const id = data?.id;
-    dispatch(updateProductAction(id));
+    // const id = data?.id;
+    // dispatch(updateProductAction(id));
+    setOpenModal(true);
+    setProductUpdate(data);
   };
 
   const deleteRecordHandler = (data) => {
@@ -217,6 +218,7 @@ const Products = () => {
         open={openModal}
         onClose={handleCloseModal}
         onProductCreated={() => loadData()}
+        productUpdate={productUpdate}
       />
 
       {loading && <LoaderComponent />}

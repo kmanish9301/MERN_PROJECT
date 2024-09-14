@@ -7,3 +7,4 @@ export const searchString = "search_string";
 export const contactUsApiUrl = "/v1/contact_us";
 export const createProductApiUrl = "/v1/create_product";
 export const deleteProductApiUrl = "/v1/delete_product";
+export const updateProductApiUrl = "/v1/update_product";

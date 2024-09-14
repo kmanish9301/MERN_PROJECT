@@ -22,12 +22,14 @@ import { fuelTypeOptions, vehicleTypeOptions } from "../../Constants/constants";
 import {
   createProductAction,
   createProductReset,
+  updateProductAction,
+  updateProductReset,
 } from "../../store/actions/actions";
 
-const CreateProduct = ({ open, onClose, onProductCreated }) => {
+const CreateProduct = ({ open, onClose, onProductCreated, productUpdate }) => {
   const dispatch = useDispatch();
 
-  const { productData, success, loading } = useSelector(
+  const { success, loading, updateProductSuccess } = useSelector(
     (state) => state.product
   );
 
@@ -61,13 +63,28 @@ const CreateProduct = ({ open, onClose, onProductCreated }) => {
     formState: { errors },
   } = methods;
 
+  // Prefill form in update mode
+  useEffect(() => {
+    if (productUpdate && open) {
+      reset({
+        type: productUpdate?.type || "",
+        name: productUpdate?.name || "",
+        brand: productUpdate?.brand || "",
+        speed: productUpdate?.speed || "",
+        fuelType: productUpdate?.fuelType || "",
+        price: productUpdate?.price || "",
+      });
+      setSelectedFile(null);
+    }
+  }, [productUpdate, open, reset]);
+
   const handleFileChange = (event) => {
     if (event.target.files[0]) {
       setSelectedFile(event.target.files[0]);
     }
   };
 
-  const handleCreateProduct = (data) => {
+  const handleProductAction = (data) => {
     const formData = new FormData();
     formData.append("type", data.type);
     formData.append("name", data.name);
@@ -79,7 +96,11 @@ const CreateProduct = ({ open, onClose, onProductCreated }) => {
       formData.append("image", selectedFile);
     }
 
-    dispatch(createProductAction(formData));
+    if (productUpdate?.id) {
+      dispatch(updateProductAction({ id: productUpdate?.id, formData }));
+    } else {
+      dispatch(createProductAction(formData));
+    }
   };
 
   useEffect(() => {
@@ -90,14 +111,15 @@ const CreateProduct = ({ open, onClose, onProductCreated }) => {
   }, [open, reset]);
 
   useEffect(() => {
-    if (success) {
+    if (success || updateProductSuccess) {
       onProductCreated();
       onClose();
     }
     return () => {
       dispatch(createProductReset());
+      dispatch(updateProductReset());
     };
-  }, [success]);
+  }, [success, updateProductSuccess]);
 
   return (
     <>
@@ -122,12 +144,12 @@ const CreateProduct = ({ open, onClose, onProductCreated }) => {
           }}
         >
           <Typography variant="h6" component="h2">
-            Create Product
+            {productUpdate?.id ? "Update Product" : "Create Product"}
           </Typography>
 
           <FormProvider {...methods}>
             <form
-              onSubmit={handleSubmit(handleCreateProduct)}
+              onSubmit={handleSubmit(handleProductAction)}
               style={{
                 width: "100%",
                 display: "flex",
@@ -149,7 +171,7 @@ const CreateProduct = ({ open, onClose, onProductCreated }) => {
                   src={
                     selectedFile
                       ? URL.createObjectURL(selectedFile)
-                      : defaultImage
+                      : productUpdate?.image || defaultImage
                   }
                   sx={{
                     width: "100%",
@@ -262,7 +284,7 @@ const CreateProduct = ({ open, onClose, onProductCreated }) => {
                 sx={{ width: "100%", marginTop: "1rem" }}
                 type="submit"
               >
-                Create Product
+                {productUpdate?.id ? "Update Product" : "Create Product"}
               </Button>
             </form>
           </FormProvider>
