@@ -20,6 +20,7 @@ import "./style.scss";
 
 const Products = () => {
   const dispatch = useDispatch();
+  const userRole = localStorage.getItem("role");
   const { data, deleteProductSuccess, loading } = useSelector(
     (state) => state.product
   );
@@ -126,14 +127,16 @@ const Products = () => {
             gap={"2rem"}
           >
             <SearchBar value={searchTerm} onChange={handleChange} />
-            <Button
-              variant="outlined"
-              color="primary"
-              sx={{ borderRadius: "2rem" }}
-              onClick={handleOpenModal}
-            >
-              Create Product
-            </Button>
+            {userRole === "admin" && (
+              <Button
+                variant="outlined"
+                color="primary"
+                sx={{ borderRadius: "2rem" }}
+                onClick={handleOpenModal}
+              >
+                Create Product
+              </Button>
+            )}
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6}>
             <Grid
@@ -177,20 +180,22 @@ const Products = () => {
             data.map((prod) => (
               <Card key={prod.id} className="cardContainer">
                 <Box sx={{ position: "relative" }}>
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: "0rem",
-                      right: "0rem",
-                      zIndex: 1,
-                    }}
-                  >
-                    <EllipsisOption
-                      options={ellipsisOptions}
-                      record={prod}
-                      className="ellipsisMenu"
-                    />
-                  </Box>
+                  {userRole === "admin" && (
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: "0rem",
+                        right: "0rem",
+                        zIndex: 1,
+                      }}
+                    >
+                      <EllipsisOption
+                        options={ellipsisOptions}
+                        record={prod}
+                        className="ellipsisMenu"
+                      />
+                    </Box>
+                  )}
                   <img
                     src={prod.image || defaultImage}
                     onError={(e) => {

@@ -16,6 +16,8 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const drawerWidth = open ? 200 : 60;
 
+  const userRole = localStorage.getItem("role");
+
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
@@ -58,33 +60,37 @@ const Sidebar = () => {
               </ListItemIcon>
             </ListItemButton>
           </ListItem>
-          {navLinkData?.map(({ id, title, link, icon }) => (
-            <ListItem key={id} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                component={Link}
-                to={link}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+
+          {/* Conditionally render links based on user role */}
+          {navLinkData
+            .filter(({ role }) => !role || role === userRole)
+            .map(({ id, title, link, icon }) => (
+              <ListItem key={id} disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  component={Link}
+                  to={link}
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
                   }}
                 >
-                  {icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={title}
-                  sx={{ opacity: open ? 1 : 0, transition: "opacity 0.3s" }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={title}
+                    sx={{ opacity: open ? 1 : 0, transition: "opacity 0.3s" }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
         </List>
       </Box>
     </Drawer>

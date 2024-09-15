@@ -13,7 +13,11 @@ const __dirname = path.dirname(__filename);
 const uploadsDir = path.resolve(__dirname, "../../userImages");
 
 const generateToken = (user, secret, expiresIn) => {
-  return jwt.sign({ id: user._id, email: user.email }, secret, { expiresIn });
+  return jwt.sign(
+    { id: user._id, email: user.email, role: user.role },
+    secret,
+    { expiresIn }
+  );
 };
 
 export const register = async (req, res) => {

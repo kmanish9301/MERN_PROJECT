@@ -11,30 +11,35 @@ export const navLinkData = [
     title: "Home",
     link: ROUTES.HOME,
     icon: <HomeIcon />,
+    role: null,
   },
   {
     id: 1002,
     title: "About",
     link: ROUTES.ABOUT,
     icon: <AboutIcon />,
+    role: null,
   },
   {
     id: 1003,
     title: "Users",
     link: ROUTES.USERS,
     icon: <GroupIcon />,
+    role: "admin", // Accessible only to 'admin' role
   },
   {
     id: 1004,
     title: "Vehicles",
     link: ROUTES.PRODUCTS,
     icon: <VehicleIcon />,
+    role: null,
   },
   {
     id: 1005,
     title: "Contact",
     link: ROUTES.CONTACT,
     icon: <ContactIcon />,
+    role: null,
   },
 ];
 
