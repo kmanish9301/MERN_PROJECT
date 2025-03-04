@@ -2,7 +2,7 @@ import { toggleTheme } from "../action-constants/actionTypes";
 
 const initialState = {
     palette: {
-        mode: 'light', // Default mode
+        mode: 'dark', // Default mode
         loading: false
     },
 };
