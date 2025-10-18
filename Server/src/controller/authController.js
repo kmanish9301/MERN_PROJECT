@@ -176,21 +176,21 @@ export const register = async (req, res) => {
     };
 
     // Prepare the email template and attachments
-    const emailTemplate = createEmailTemplate(user.user_name);
-    const attachments = [
-      {
-        filename: "logo.jpg",
-        path: imagePath,
-        cid: "logo1",
-      },
-    ];
+    // const emailTemplate = createEmailTemplate(user.user_name);
+    // const attachments = [
+    //   {
+    //     filename: "logo.jpg",
+    //     path: imagePath,
+    //     cid: "logo1",
+    //   },
+    // ];
 
-    await sendEmail(
-      user.email,
-      "Welcome Onboard...!",
-      emailTemplate,
-      attachments
-    );
+    // await sendEmail(
+    //   user.email,
+    //   "Welcome Onboard...!",
+    //   emailTemplate,
+    //   attachments
+    // );
 
     // Generate JWT tokens
     const token = generateToken(

@@ -32,11 +32,11 @@ export const CreateContactRequest = async (req, res) => {
     `;
 
     // Sending the email
-    await sendEmail(
-      email, //users emil
-      `Contact Request Received: ${subject}`, // Subject of the email
-      htmlContent // HTML body content
-    );
+    // await sendEmail(
+    //   email, //users emil
+    //   `Contact Request Received: ${subject}`, // Subject of the email
+    //   htmlContent // HTML body content
+    // );
 
     res.status(201).json({
       success: true,
